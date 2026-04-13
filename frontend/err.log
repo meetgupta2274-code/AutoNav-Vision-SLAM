@@ -1,0 +1,53 @@
+
+> frontend@0.0.0 dev
+> vite
+
+[33mYou are using Node.js 21.7.1. Vite requires Node.js version 20.19+ or 22.12+. Please upgrade your Node.js version.[39m
+file:///C:/Users/lenovo/OneDrive/Desktop/personal_projects/AI%20Based%20Visual%20Slam%20For%20Autonomous%20Navigation/frontend/node_modules/rolldown/dist/shared/binding-CkWPGrSM.mjs:507
+		if (loadErrors.length > 0) throw new Error("Cannot find native binding. npm has a bug related to optional dependencies (https://github.com/npm/cli/issues/4828). Please try `npm i` again after removing both package-lock.json and node_modules directory.", { cause: loadErrors.reduce((err, cur) => {
+		                                 ^
+
+Error: Cannot find native binding. npm has a bug related to optional dependencies (https://github.com/npm/cli/issues/4828). Please try `npm i` again after removing both package-lock.json and node_modules directory.
+    at file:///C:/Users/lenovo/OneDrive/Desktop/personal_projects/AI%20Based%20Visual%20Slam%20For%20Autonomous%20Navigation/frontend/node_modules/rolldown/dist/shared/binding-CkWPGrSM.mjs:507:36
+    at file:///C:/Users/lenovo/OneDrive/Desktop/personal_projects/AI%20Based%20Visual%20Slam%20For%20Autonomous%20Navigation/frontend/node_modules/rolldown/dist/shared/binding-CkWPGrSM.mjs:9:48
+    ... 2 lines matching cause stack trace ...
+    at async ModuleLoader.import (node:internal/modules/esm/loader:323:24)
+    at async CAC.<anonymous> (file:///C:/Users/lenovo/OneDrive/Desktop/personal_projects/AI%20Based%20Visual%20Slam%20For%20Autonomous%20Navigation/frontend/node_modules/vite/dist/node/cli.js:707:27) {
+  [cause]: Error: Cannot find module '@rolldown/binding-win32-x64-msvc'
+  Require stack:
+  - C:\Users\lenovo\OneDrive\Desktop\personal_projects\AI Based Visual Slam For Autonomous Navigation\frontend\node_modules\rolldown\dist\shared\binding-CkWPGrSM.mjs
+      at Module._resolveFilename (node:internal/modules/cjs/loader:1142:15)
+      ... 2 lines matching cause stack trace ...
+      at require (node:internal/modules/helpers:179:18)
+      at requireNative (file:///C:/Users/lenovo/OneDrive/Desktop/personal_projects/AI%20Based%20Visual%20Slam%20For%20Autonomous%20Navigation/frontend/node_modules/rolldown/dist/shared/binding-CkWPGrSM.mjs:147:21)
+      at file:///C:/Users/lenovo/OneDrive/Desktop/personal_projects/AI%20Based%20Visual%20Slam%20For%20Autonomous%20Navigation/frontend/node_modules/rolldown/dist/shared/binding-CkWPGrSM.mjs:475:18
+      at file:///C:/Users/lenovo/OneDrive/Desktop/personal_projects/AI%20Based%20Visual%20Slam%20For%20Autonomous%20Navigation/frontend/node_modules/rolldown/dist/shared/binding-CkWPGrSM.mjs:9:48
+      at file:///C:/Users/lenovo/OneDrive/Desktop/personal_projects/AI%20Based%20Visual%20Slam%20For%20Autonomous%20Navigation/frontend/node_modules/rolldown/dist/shared/parse-BGipdujE.mjs:39:46
+      at ModuleJob.run (node:internal/modules/esm/module_job:222:25)
+      at async ModuleLoader.import (node:internal/modules/esm/loader:323:24) {
+    code: 'MODULE_NOT_FOUND',
+    requireStack: [
+      'C:\\Users\\lenovo\\OneDrive\\Desktop\\personal_projects\\AI Based Visual Slam For Autonomous Navigation\\frontend\\node_modules\\rolldown\\dist\\shared\\binding-CkWPGrSM.mjs'
+    ],
+    cause: Error: Cannot find module './rolldown-binding.win32-x64-msvc.node'
+    Require stack:
+    - C:\Users\lenovo\OneDrive\Desktop\personal_projects\AI Based Visual Slam For Autonomous Navigation\frontend\node_modules\rolldown\dist\shared\binding-CkWPGrSM.mjs
+        at Module._resolveFilename (node:internal/modules/cjs/loader:1142:15)
+        at Module._load (node:internal/modules/cjs/loader:983:27)
+        at Module.require (node:internal/modules/cjs/loader:1230:19)
+        at require (node:internal/modules/helpers:179:18)
+        at requireNative (file:///C:/Users/lenovo/OneDrive/Desktop/personal_projects/AI%20Based%20Visual%20Slam%20For%20Autonomous%20Navigation/frontend/node_modules/rolldown/dist/shared/binding-CkWPGrSM.mjs:142:12)
+        at file:///C:/Users/lenovo/OneDrive/Desktop/personal_projects/AI%20Based%20Visual%20Slam%20For%20Autonomous%20Navigation/frontend/node_modules/rolldown/dist/shared/binding-CkWPGrSM.mjs:475:18
+        at file:///C:/Users/lenovo/OneDrive/Desktop/personal_projects/AI%20Based%20Visual%20Slam%20For%20Autonomous%20Navigation/frontend/node_modules/rolldown/dist/shared/binding-CkWPGrSM.mjs:9:48
+        at file:///C:/Users/lenovo/OneDrive/Desktop/personal_projects/AI%20Based%20Visual%20Slam%20For%20Autonomous%20Navigation/frontend/node_modules/rolldown/dist/shared/parse-BGipdujE.mjs:39:46
+        at ModuleJob.run (node:internal/modules/esm/module_job:222:25)
+        at async ModuleLoader.import (node:internal/modules/esm/loader:323:24) {
+      code: 'MODULE_NOT_FOUND',
+      requireStack: [
+        'C:\\Users\\lenovo\\OneDrive\\Desktop\\personal_projects\\AI Based Visual Slam For Autonomous Navigation\\frontend\\node_modules\\rolldown\\dist\\shared\\binding-CkWPGrSM.mjs'
+      ]
+    }
+  }
+}
+
+Node.js v21.7.1

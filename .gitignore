@@ -1,0 +1,15 @@
+# Python
+myenv/
+venv/
+__pycache__/
+*.pyc
+
+# Environment
+.env
+
+# Node (for frontend)
+node_modules/
+dist/
+
+# Misc
+.DS_Store
