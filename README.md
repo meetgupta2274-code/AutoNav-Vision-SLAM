@@ -1,7 +1,5 @@
 # AutoNav Vision SLAM
 
-![Banner/Demo Screenshot Placeholder](https://via.placeholder.com/1200x400?text=AutoNav+Vision+SLAM+Dashboard)
-
 > **A Full-Stack Monocular Visual SLAM Dashboard for Autonomous Navigation, powered by YOLOv11 and A* Pathfinding.**
 
 ## 📖 Overview
