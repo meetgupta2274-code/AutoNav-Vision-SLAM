@@ -1,73 +1,84 @@
-# AI-Based Visual SLAM for Autonomous Navigation
+# AutoNav Vision SLAM
 
-This document serves as the comprehensive technical guide and reference manual for the Final Year Project: **AI-Based Visual SLAM for Autonomous Navigation**.
+![Banner/Demo Screenshot Placeholder](https://via.placeholder.com/1200x400?text=AutoNav+Vision+SLAM+Dashboard)
 
----
+> **A Full-Stack Monocular Visual SLAM Dashboard for Autonomous Navigation, powered by YOLOv11 and A* Pathfinding.**
 
-## 1. Project Overview
-This project simulates the visual perception and spatial reasoning capabilities of an autonomous robotic unit. Originally prototyped as a local Python script, the architecture has been upgraded to a production-grade, Full-Stack Intelligent Dashboard. 
+## 📖 Overview
+This project simulates the visual perception and spatial reasoning capabilities of an autonomous robotic unit. Upgraded from a local Python script into a **Production-Grade Intelligent Web Dashboard**, this system models a **Monocular Semantic SLAM** approach. 
 
-Instead of full dense 3D Point-Cloud SLAM (which relies on LiDAR or Stereo-Depth Odometry), this system models a **Monocular Semantic SLAM** approach. It interprets a standard 2D camera feed, detects human targets in real-time space, maps the visual plane to a topological grid, and mathematically evaluates the optimal navigation paths toward targets while bypassing hypothetical obstacles.
+It ingests standard 2D camera feeds, detects subjects in real-time, projects the visual plane onto a topological coordinate grid, and mathematically computes optimal navigational trajectories around obstacles.
 
----
-
-## 2. Technology Stack
-
-### Backend Engine (The AI & Core Logic)
-- **Language**: Python 3.x
-- **FastAPI**: A modern, high-performance web framework used to serve the REST API endpoints and process real-time WebSocket streams without blocking execution.
-- **Uvicorn**: An ASGI web server designed to run concurrent asynchronous processes.
-- **OpenCV (`cv2`)**: Used for ingesting the camera streams (Webcam or `.mp4`), manipulating the tensor matrices, and drawing target overlays (bounding boxes, trajectory lines) onto the video frame.
-- **Ultralytics**: The official framework powering the YOLOv11 model integration.
-
-### Frontend Dashboard (The Telemetry Interface)
-- **Library**: React (Bootstrapped via Vite for lightning-fast compilation).
-- **Styling**: Tailwind CSS (v3) utilized to create a sleek, "Glassmorphic" Dark Mode aesthetic suited for an autonomous robot's HUD (Heads Up Display).
-- **Icons**: `lucide-react` for the modern dashboard iconography.
+## 🚀 Key Features
+* **Real-Time Video Inference**: Ingests Live Webcams or pre-recorded `.mp4` payloads seamlessly.
+* **Semantic Perception**: Uses Ultralytics YOLOv11 Nano for edge-optimized, real-time object tracking.
+* **Topological A* Routing**: Projects physical space into a 30x30 dense matrix, dynamically computing `f(n) = g(n) + h(n)` vectors to target centroids.
+* **Multi-Factor Decision Engine**: Autonomously ranks and targets subjects based on normalized Confidences, Pixel Distances, and Path Trajectories.
+* **Telemetry Dashboard**: A React + Vite UI utilizing Glassmorphic aesthetics, consuming backend MJPEG streams and WebSocket data feeds at 10Hz.
 
 ---
 
-## 3. Core Algorithms Used
+## 🛠️ Technology Stack
 
-### A. Semantic Perception (YOLOv11)
-**You Only Look Once (YOLO)** is a state-of-the-art, real-time object detection algorithm. We use the Nano variant (`yolo11n.pt`) optimized for edge-device speed.
-- **Role**: Scans every frame of the video to identify human targets, returning their bounding box coordinates (width/height), center centroids, and a categorical confidence probability ranging from 0.0 to 1.0.
-
-### B. Spatial Grid Partitioning
-- **Role**: The raw video dimension (e.g., 1920x1080 resolution) is mathematically divided into two conceptual overlays:
-  1. **Sector Matrix (3x3)**: Used for high-level semantic zoning (Labeling sectors `A1` through `C3`).
-  2. **Navigation Grid (30x30)**: A dense mathematical occupancy grid. Objects and physical space are quantized into a topological map where traversing between cells costs distance units.
-
-### C. A* (A-Star) Pathfinding Algorithm
-The A* algorithm provides theoretical optimal routing across the navigation grid.
-- **Role**: Once YOLO identifies a target centroid, the A* algorithm plots the geometry of the route from a fixed `START` node to the target's `GOAL` node.
-- **Mechanism**: It operates by minimizing the function `f(n) = g(n) + h(n)`:
-  - `g(n)`: The actual cost from the start node to node *n*.
-  - `h(n)`: The heuristic (Euclidean/Diagonal distance strategy) estimating the cost from node *n* to the final target.
-- It dynamically wraps pathing vectors around simulated physical or designated "Off-limit / Obstacle" zones defined in the topological grid.
-
-### D. Multi-Factor Recommendation Engine
-An analytical decision-maker ranking the feasibility of multiple targets if a crowd is detected.
-- **Role**: Uses custom weighted normalization to determine the mathematically "Optimal" target to pursue.
-- It ranks targets based on combining three parameters:
-   1. **`W_CONF (0.6)`**: Heavily weighs the AI's confidence that it's a real person.
-   2. **`W_PATH (0.3)`**: Weighs the total steps/cells required by the A* Algorithm to reach the target (Lower ETA = Better).
-   3. **`W_DIST (0.1)`**: Weighs the raw straight-line pixel proximity.
+| Architecture Layer | Technologies Used |
+| :--- | :--- |
+| **Backend API** | Python 3, FastAPI, Uvicorn |
+| **Computer Vision** | OpenCV (`cv2`), Ultralytics YOLOv11 |
+| **Frontend UI** | React, Vite, Tailwind CSS v3, Lucide-React |
+| **Networking** | HTTP Multipart (MJPEG), WebSockets |
 
 ---
 
-## 4. System Architecture: How It Works
+## ⚙️ Getting Started
 
-1. **Initialization (`run.bat`)**:
-   When the user runs the launcher, two distinct server environments boot concurrently. The backend API opens on Port `8000`, and the React UI binds to Port `5173`.
-   
-2. **The Daemonic Processing Loop (Backend)**:
-   A dedicated background Python thread immediately begins capturing frames from the active `cv2.VideoCapture` source.
-   - For every single frame: It invokes YOLO to detect targets, initiates the Pathfinding sequence towards the highest-ranking target, and physically paints those telemetry visualizations onto the frame payload.
+### Prerequisites
+- Python 3.9+
+- Node.js v18+
 
-3. **Multi-Protocol Streaming**:
-   - **MJPEG Visual Stream**: Through an HTTP Multipart response (`/api/video_feed`), the backend rapidly yielded the annotated frames (as `image/jpeg` byte buffers) directly into the browser's `<img>` tag, generating a smooth video playback experience.
-   - **WebSocket Telemetry Stream**: Instead of visual data, a concurrent WebSocket connection (`ws://localhost:8000/ws/telemetry`) pulses structured JSON data matching the current frame at 10Hz.
+### 1. Installation
+Clone the repository and install the backend and frontend dependencies:
 
-4. **Synchronized Dashboard (Frontend)**:
-   The React dashboard captures the MJPEG visually in the center pane while seamlessly mapping the WebSocket JSON data to the corresponding state variables to render the numeric UI logic (such as Confidence %, Active Target counts, and Path Length metrics) on the fly.
+```bash
+# Clone the repo
+git clone https://github.com/yourusername/AutoNav-Vision-SLAM.git
+cd AutoNav-Vision-SLAM
+
+# Backend Setup
+python -m venv myenv
+myenv\Scripts\activate
+pip install -r requirements.txt
+
+# Frontend Setup
+cd frontend
+npm install
+```
+
+### 2. Running the System
+For Windows users, simply execute the included batch script to spin up both servers concurrently:
+```bash
+./run.bat
+```
+
+Alternatively, you can manually start the services:
+- **Backend**: `cd backend && python -m uvicorn main:app --reload --host 0.0.0.0 --port 8000`
+- **Frontend**: `cd frontend && npm run dev`
+
+Navigate your browser to `http://localhost:5173` to access the navigation control UI.
+
+---
+
+## 🧠 System Architecture
+
+1. **Daemonic Processing**: A dedicated background Python thread rapidly ingests frames from the `cv2.VideoCapture` source natively.
+2. **Analysis Pipeline**: YOLO detects bounding boxes, while the Grid-Partition system constructs A* trajectory lines. These UI elements are painted onto the frame bytes locally.
+3. **Stream Protocol**: Annotated frames are broadcasted over `multipart/x-mixed-replace` endpoints. Concurrently, mathematical data (ETA, Confidence arrays) are dispatched over `/ws/telemetry`.
+4. **Reactive Rendering**: The React frontend maps incoming WebSocket integers to dynamic components, syncing perfectly with the inline video player.
+
+---
+
+## 🤝 Contributing
+Contributions, issues, and feature requests are welcome! 
+Feel free to check [issues page](https://github.com/yourusername/AutoNav-Vision-SLAM/issues).
+
+## 📄 License
+This project is open-sourced under the MIT License.

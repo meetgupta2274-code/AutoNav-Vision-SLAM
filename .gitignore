@@ -2,14 +2,36 @@
 myenv/
 venv/
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
 
 # Environment
 .env
+.env.*
 
 # Node (for frontend)
-node_modules/
-dist/
+frontend/node_modules/
+frontend/dist/
+frontend/.npm/
 
-# Misc
+# Application Specific Data
+backend/temp_*
+backend/*.pt
+backend/yolo11n.pt
+*.mp4
+*.avi
+*.mkv
+*.png
+*.jpg
+*.jpeg
+!Jupyter-Notebook/test5.png
+!Jupyter-Notebook/test.mp4
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints/
+
+# IDE and OS
+.vscode/
+.idea/
 .DS_Store
+Thumbs.db
